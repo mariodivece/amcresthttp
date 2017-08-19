@@ -1,2 +1,2 @@
-# armcresthttp
-Armcrest Camera HTTP API Wrapper
+# Amcresthttp
+Amcrest Camera HTTP API Wrapper
