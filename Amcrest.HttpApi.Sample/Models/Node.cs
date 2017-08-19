@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Linq;
 
-namespace Amcrest.HttpApi.Sample
+namespace Amcrest.HttpApi.Models
 {
     public sealed class Node
     {

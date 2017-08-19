@@ -1,4 +1,4 @@
-﻿namespace Amcrest.HttpApi.Sample.Models
+﻿namespace Amcrest.HttpApi.Models
 {
     using Newtonsoft.Json;
     using System.Collections.Generic;
@@ -15,7 +15,7 @@
 
         public decimal PositionX { get { return decimal.Parse(Postion[0]); } }
         public decimal PositionY { get { return decimal.Parse(Postion[1]); } }
-        public decimal Zoom { get { return decimal.Parse(Postion[2]); } }
+        public decimal PositionZ { get { return decimal.Parse(Postion[2]); } }
     }
 
     public class PtzStatusResponse

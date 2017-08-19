@@ -1,4 +1,4 @@
-﻿namespace Amcrest.HttpApi.Sample.Models
+﻿namespace Amcrest.HttpApi.Models
 {
     using Newtonsoft.Json;
     using System.Collections.Generic;
