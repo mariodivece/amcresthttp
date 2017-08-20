@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<title>Live Camera over HLS</title>
+	<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+<video 
+	id="video"
+	controls
+	style="display: block; margin-left: auto; margin-right: auto; max-width:100%; max-height:720px"></video>
+<script>
+  if(Hls.isSupported()) {
+    var video = document.getElementById('video');
+    var hls = new Hls();
+    hls.loadSource('http://localhost:8787/cam-01.m3u8');
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      video.play();
+  });
+ }
+</script>
+<div style="text-align:center;">
+hls.js lib from: https://github.com/video-dev/hls.js
+</div>
+</body>
+
+</html>
