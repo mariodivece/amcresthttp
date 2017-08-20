@@ -10,4 +10,8 @@
     <PackageReference Include="Unosquare.Swan" Version="0.14.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Amcrest.HttpApi\Amcrest.HttpApi.csproj" />
+  </ItemGroup>
+
 </Project>
