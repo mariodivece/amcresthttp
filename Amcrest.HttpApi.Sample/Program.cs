@@ -17,6 +17,9 @@
             cam.Connect(new Uri("http://192.168.137.183/"), "admin", "pass.word1");
             var audioBytesReceived = 0;
 
+            var rtspConfig = cam.GetConfigRtsp().Result;
+            var rtspMonUri = cam.GetRtspMonitorUri().Result;
+            return;
             var audioReceiveTask = Task.Run(async () =>
             {
                 var audioStream = await cam.ReceiveAudioStream();

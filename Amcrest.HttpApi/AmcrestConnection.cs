@@ -10,6 +10,8 @@
     public class AmcrestConnection : IDisposable
     {
         private const int DefaultChannel = 1;
+        private const int DefaultStreamType = 0;
+
         private bool IsDisposed = false;
 
         #region Properties
@@ -60,6 +62,21 @@
 
         #endregion
 
+        public async Task<Uri> GetRtspMonitorUri(int channel = DefaultChannel, int subType = DefaultStreamType)
+        {
+            var rtspConfig = await GetConfigRtsp();
+            return new Uri(
+                $"rtsp://{Username}:{Password}@{BaseAddress.Host}:{rtspConfig.Port}/cam/realmonitor?channel={channel}&subtype={subType}");
+        }
+
+        public async Task<RtspConfig> GetConfigRtsp()
+        {
+            var httpResponse = await Client.GetAsync(BuildTargetUri(
+                $"/cgi-bin/configManager.cgi?action=getConfig&name=RTSP"));
+            var config = await Response.CreateAsync<ConfigTableResponse>(httpResponse);
+            return config.Table.RTSP;
+        }
+
         public async Task<DateTime> GetCurrentTime()
         {
             var httpResponse = await Client.GetAsync(BuildTargetUri(
@@ -109,11 +126,21 @@
             return new Uri(BaseAddress, relativePath);
         }
 
+        internal async Task<string> GetResponseText(HttpResponseMessage httpResponse)
+        {
+            return await httpResponse.Content.ReadAsStringAsync();
+        }
+
         internal async Task<string> GetResponseText(string path)
         {
-            var targetUri = new Uri(BaseAddress, path);
-            var httpResponse = await Client.GetAsync(targetUri);
-            return await httpResponse.Content.ReadAsStringAsync();
+            var httpResponse = await Client.GetAsync(BuildTargetUri(path));
+            return await GetResponseText(httpResponse);
+        }
+
+        internal async Task<string> GetResponseJson(HttpResponseMessage httpResponse)
+        {
+            var text = await GetResponseText(httpResponse);
+            return Node.FromFormData(text).ToJson();
         }
 
         internal async Task<string> GetResponseJson(string path)
