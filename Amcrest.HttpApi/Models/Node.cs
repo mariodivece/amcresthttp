@@ -50,8 +50,13 @@ namespace Amcrest.HttpApi.Models
             {
                 var separatorIndex = line.LastIndexOf('=');
                 var textValue = line.Substring(separatorIndex + 1);
-                var paths = line.Substring(0, separatorIndex).Split('.');
+                if (textValue == null)
+                    textValue = string.Empty;
+
                 var currentNode = result;
+                var paths = line.Substring(0, separatorIndex)
+                    .Replace("][", "].Items[")
+                    .Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
 
                 for (var pathIndex = 0; pathIndex < paths.Length; pathIndex++)
                 {
@@ -71,7 +76,6 @@ namespace Amcrest.HttpApi.Models
                 }
 
                 currentNode.Text = textValue;
-
             }
 
             if (result.Children.Count == 1)
@@ -150,7 +154,7 @@ namespace Amcrest.HttpApi.Models
                 var textValue = $" \"{Text}\"";
                 if (Text.Equals("true") || Text.Equals("false"))
                     textValue = $" {Text}";
-                else if (Text.All(c => char.IsDigit(c)))
+                else if (string.IsNullOrWhiteSpace(Text) == false && Text.All(c => char.IsDigit(c)))
                     textValue = $" {Text}";
 
                 if (IsArrayItemNode)

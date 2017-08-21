@@ -2,6 +2,7 @@
 {
     using Amcrest.HttpApi.Models;
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Net;
     using System.Net.Http;
@@ -77,6 +78,85 @@
             return config.Table.RTSP;
         }
 
+        public async Task<List<SnapConfig>> GetConfigSnap()
+        {
+            var httpResponse = await Client.GetAsync(BuildTargetUri(
+                $"/cgi-bin/configManager.cgi?action=getConfig&name=Snap"));
+            var config = await Response.CreateAsync<ConfigTableResponse>(httpResponse);
+            return config.Table.Snap;
+        }
+
+        public async Task<List<VideoColor>> GetConfigVideoColor()
+        {
+            var httpResponse = await Client.GetAsync(BuildTargetUri(
+                $"/cgi-bin/configManager.cgi?action=getConfig&name=VideoColor"));
+
+            var config = await Response.CreateAsync<ConfigTableResponse>(httpResponse);
+            return config.Table.VideoColor;
+        }
+
+        public async Task<List<Encode>> GetConfigEncode()
+        {
+            var httpResponse = await Client.GetAsync(BuildTargetUri(
+                $"/cgi-bin/configManager.cgi?action=getConfig&name=Encode"));
+
+            var config = await Response.CreateAsync<ConfigTableResponse>(httpResponse);
+            return config.Table.Encode;
+        }
+
+        public async Task<List<VideoEncodeROI>> GetConfigVideoEncodeROI()
+        {
+            var httpResponse = await Client.GetAsync(BuildTargetUri(
+                $"/cgi-bin/configManager.cgi?action=getConfig&name=VideoEncodeROI"));
+
+            var config = await Response.CreateAsync<ConfigTableResponse>(httpResponse);
+            return config.Table.VideoEncodeROI;
+        }
+
+        public async Task<List<ChannelTitle>> GetConfigChannelTitle()
+        {
+            var httpResponse = await Client.GetAsync(BuildTargetUri(
+                $"/cgi-bin/configManager.cgi?action=getConfig&name=ChannelTitle"));
+
+            var config = await Response.CreateAsync<ConfigTableResponse>(httpResponse);
+            return config.Table.ChannelTitle;
+        }
+
+        public async Task<string> GetConfigVideoStandard()
+        {
+            var httpResponse = await Client.GetAsync(BuildTargetUri(
+                $"/cgi-bin/configManager.cgi?action=getConfig&name=VideoStandard"));
+
+            var config = await Response.CreateAsync<ConfigTableResponse>(httpResponse);
+            return config.Table.VideoStandard;
+        }
+
+        public async Task<List<VideoWidget>> GetConfigVideoWidget()
+        {
+            var httpResponse = await Client.GetAsync(BuildTargetUri(
+                $"/cgi-bin/configManager.cgi?action=getConfig&name=VideoWidget"));
+
+            var config = await Response.CreateAsync<ConfigTableResponse>(httpResponse);
+            return config.Table.VideoWidget;
+        }
+
+        public async Task<List<VideoInOption>> GetConfigVideoInOptions()
+        {
+            var httpResponse = await Client.GetAsync(BuildTargetUri(
+                $"/cgi-bin/configManager.cgi?action=getConfig&name=VideoInOptions"));
+
+            var config = await Response.CreateAsync<ConfigTableResponse>(httpResponse);
+            return config.Table.VideoInOptions;
+        }
+
+        public async Task<string> GetConfigJson(string tableName)
+        {
+            var httpResponse = await Client.GetAsync(BuildTargetUri(
+                $"/cgi-bin/configManager.cgi?action=getConfig&name={tableName}"));
+
+            return await GetResponseJson(httpResponse);
+        }
+
         public async Task<DateTime> GetCurrentTime()
         {
             var httpResponse = await Client.GetAsync(BuildTargetUri(
@@ -85,11 +165,11 @@
             return DateTime.Parse(response.Value);
         }
 
-        public async Task<ConfigCapsResponse> GetEncodeConfig(int channel = DefaultChannel)
+        public async Task<ConfigEncodeCapsResponse> GetConfigEncodeCaps(int channel = DefaultChannel)
         {
             var httpResponse = await Client.GetAsync(BuildTargetUri(
                 $"/cgi-bin/encode.cgi?action=getConfigCaps&channel={channel}"));
-            return await Response.CreateAsync<ConfigCapsResponse>(httpResponse);
+            return await Response.CreateAsync<ConfigEncodeCapsResponse>(httpResponse);
         }
 
         public async Task<PtzStatusResponse> GetPtzStatus(int channel = DefaultChannel)

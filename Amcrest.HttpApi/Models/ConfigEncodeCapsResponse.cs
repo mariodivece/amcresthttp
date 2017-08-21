@@ -29,7 +29,7 @@
         public List<MediaFormat> SnapFormat { get; set; }
     }
 
-    public class ConfigCapsResponse
+    public class ConfigEncodeCapsResponse
     {
         [JsonProperty("caps")]
         public List<Cap> Caps { get; set; }

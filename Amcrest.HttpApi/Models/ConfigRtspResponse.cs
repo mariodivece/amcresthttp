@@ -14,15 +14,4 @@
         public int Port { get; set; }
         public PortRange RTP { get; set; }
     }
-
-    public class ConfigTable
-    {
-        public RtspConfig RTSP { get; set; }
-    }
-
-    public class ConfigTableResponse
-    {
-        [JsonProperty("table")]
-        public ConfigTable Table { get; set; }
-    }
 }

@@ -17,8 +17,21 @@
             cam.Connect(new Uri("http://192.168.137.183/"), "admin", "pass.word1");
             var audioBytesReceived = 0;
 
-            var rtspConfig = cam.GetConfigRtsp().Result;
-            var rtspMonUri = cam.GetRtspMonitorUri().Result;
+            // var snapConfig = cam.GetConfigSnap().Result;
+            // var capsConfig = cam.GetConfigEncodeCaps().Result;
+            // var encodeConfig = cam.GetConfigEncode().Result;
+            // var rtspConfig = cam.GetConfigRtsp().Result;
+            // var rtspMonUri = cam.GetRtspMonitorUri().Result;
+            // var videoColorConfig = cam.GetConfigVideoColor().Result;
+            // var videoRoiConfig = cam.GetConfigVideoEncodeROI().Result;
+            // var channelTitlesConfig = cam.GetConfigChannelTitle().Result;
+            // var videoStdConfig = cam.GetConfigVideoStandard().Result;
+            // var videoWidgetConfig = cam.GetConfigVideoWidget().Result;
+
+            var videoInOptions = cam.GetConfigVideoInOptions().Result;
+
+            var jsonConfig = cam.GetConfigJson("VideoInOptions").Result;
+
             return;
             var audioReceiveTask = Task.Run(async () =>
             {
